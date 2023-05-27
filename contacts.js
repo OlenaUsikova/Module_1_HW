@@ -34,7 +34,6 @@ const addContact = async (data) => {
   await updateContacts(contacts);
   return newContact;
 };
-
 module.exports = {
   listContacts,
   getContactById,

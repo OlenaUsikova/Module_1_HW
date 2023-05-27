@@ -1,5 +1,6 @@
+const yargs = require("yargs");
 const contactsServises = require("./contacts")
-// const argv = require("yargs").argv;
+const argv = require("yargs").argv;
 
 const invokeAction = async({ action, id, name, email, phone }) => {
   switch (action) {
@@ -31,3 +32,6 @@ const invokeAction = async({ action, id, name, email, phone }) => {
 // invokeAction({action: "list"})
 // invokeAction({action: "get", id: "drsAJ4SHPYqZeG-83QTVW"})
 // invokeAction({action: "add", name: "Merylin Monrou", email: "monrou@star.com", phone: "(222) 333-4444"})
+
+const {argv} = yargs(process.argv.slice(2));
+invokeAction(argv);
