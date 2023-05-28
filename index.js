@@ -1,37 +1,46 @@
-const yargs = require("yargs");
-const contactsServises = require("./contacts")
-const argv = require("yargs").argv;
+const contactsServises = require('./contacts');
+// const argv = require("yargs").argv;
+const { program } = require('commander');
 
-const invokeAction = async({ action, id, name, email, phone }) => {
+const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
-    case "list":
-      const listContacts = await contactsServises.listContacts();
-      console.log(listContacts);
+    case 'list':
+      const сontactsList = await contactsServises.listContacts();
+      console.log(сontactsList);
       break;
-
-    case "get":
-        const oneContact = await contactsServises.getContactById(id);
-        console.log(oneContact);
+    case 'get':
+      const oneContact = await contactsServises.getContactById(id);
+      console.log(oneContact);
       break;
-
-    case "add":
-        const newContact = await contactsServises.addContact({name, email, phone});
-        console.log(newContact);
+    case 'add':
+      const newContact = await contactsServises.addContact({
+        name,
+        email,
+        phone,
+      });
+      console.log(newContact);
       break;
-
-    case "remove":
-        const removeContact = await contactsServises.removeContact(id, {name, email, phone});
-        console.log(removeContact);
+    case 'remove':
+      const deleteContact = await contactsServises.removeContact(id);
+      console.log(deleteContact);
       break;
-
     default:
-      console.warn("\x1B[31m Unknown action type!");
+      console.warn('\x1B[31m Unknown action type!');
   }
-}
+};
 // invokeAction(argv);
 // invokeAction({action: "list"})
 // invokeAction({action: "get", id: "drsAJ4SHPYqZeG-83QTVW"})
-// invokeAction({action: "add", name: "Merylin Monrou", email: "monrou@star.com", phone: "(222) 333-4444"})
+// invokeAction({action: "add", name: "Merylin Monrou", email: "monrou@star.com", phone: "222 333-4444"})
+// invokeAction({action: "remove", id: "ezZvO7gcQreJ2c5dMoSx9"})
+// const {argv} = yargs(process.argv.slice(2));
+program
+  .option('-a, --action <type>', 'choose action')
+  .option('-i, --id <type>', 'user id')
+  .option('-n, --name <type>', 'user name')
+  .option('-e, --email <type>', 'user email')
+  .option('-p, --phone <type>', 'user phone');
 
-const {argv} = yargs(process.argv.slice(2));
+program.parse(process.argv);
+const argv = program.opts();
 invokeAction(argv);
